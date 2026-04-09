@@ -11,7 +11,8 @@ export const createResume = async (req,res) =>{
         const {title} = req.body;
 
         //Create new resume
-        const newResume = await Resume.create({userId: title})
+        const newResume = await Resume.create({ userId, title })
+
         //return success message
         return res.status(201).json({message : 'Resume created successfully' ,resume:newResume})
     } catch (error) {
@@ -68,7 +69,7 @@ export const getResumeById = async (req,res) =>{
 
 export const getPublicResumeById = async (req,res) =>{
     try {
-        const {resumeId} = res.params;
+        const {resumeId} = req.params;
         const resume = await Resume.findOne({public: true, _id:resumeId})
 
         if(!resume){
@@ -82,6 +83,31 @@ export const getPublicResumeById = async (req,res) =>{
     }
 }
 
+export const duplicateResume = async (req, res) => {
+    try {
+        const userId = req.userId
+        const { resumeId } = req.params
+
+        const original = await Resume.findOne({ userId, _id: resumeId })
+        if (!original) {
+            return res.status(404).json({ message: 'Resume not found' })
+        }
+
+        const duplicateData = original.toObject()
+        delete duplicateData._id
+        delete duplicateData.createdAt
+        delete duplicateData.updatedAt
+        delete duplicateData.__v
+        duplicateData.title = `${original.title} (Copy)`
+        duplicateData.public = false
+
+        const newResume = await Resume.create(duplicateData)
+        return res.status(201).json({ message: 'Resume duplicated successfully', resume: newResume })
+
+    } catch (error) {
+        return res.status(400).json({ message: error.message })
+    }
+}
 
 //controller for updating resume
 //PUT : /api/resumes/update
