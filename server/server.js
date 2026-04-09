@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(cors({
     origin: [
         'http://localhost:5173',
-        'https://ai-resume-builder-frontend.onrender.com'  // replace with your actual Render frontend URL
+        'https://ai-resume-builder-frontend-hqwn.onrender.com'  // replace with your actual Render frontend URL
     ],
     credentials: true
 }))
