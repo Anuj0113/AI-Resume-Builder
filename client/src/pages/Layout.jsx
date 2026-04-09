@@ -1,28 +1,36 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Outlet, Navigate, useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { useSelector } from 'react-redux'
 import Loader from '../components/Loader'
-import Login from './Login'
 
 const Layout = () => {
+  const { user, loading } = useSelector(state => state.auth)
+  const navigate = useNavigate()
 
-  const {user, loading} = useSelector(state=>state.auth)
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/login', { replace: true })
+    }
+  }, [user, loading])
 
-  if(loading){
-    return <Loader />
-  }
+  useEffect(() => {
+    const handlePopState = () => {
+      if (!user) {
+        navigate('/login', { replace: true })
+      }
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [user])
+
+  if (loading) return <Loader />
+  if (!user) return <Navigate to='/login' replace />
 
   return (
-    <div>
-      {
-        user ? (<div className='min-h-screen bg-gray-50'>
-        <Navbar />
-        <Outlet />
-      </div>) 
-      : <Login />
-      }
-      
+    <div className='min-h-screen bg-gray-50'>
+      <Navbar />
+      <Outlet />
     </div>
   )
 }

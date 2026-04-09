@@ -93,24 +93,33 @@ const ClassicTemplate = ({ data, accentColor }) => {
             )}
 
             {/* Projects */}
-            {data.project && data.project.length > 0 && (
-                <section className="mb-6">
-                    <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
-                        PROJECTS
-                    </h2>
+            {/* Projects */}
+{data.projects && data.projects.length > 0 && (
+    <section className="mb-6">
+        <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
+            PROJECTS
+        </h2>
 
-                    <ul className="space-y-3 ">
-                        {data.project.map((proj, index) => (
-                            <div key={index} className="flex justify-between items-start border-l-3 border-gray-300 pl-6">
-                                <div>
-                                    <li className="font-semibold text-gray-800 ">{proj.name}</li>
-                                    <p className="text-gray-600">{proj.description}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </ul>
-                </section>
-            )}
+        <div className="space-y-3">
+            {data.projects.map((proj, index) => (
+                <div key={index} className="border-l-3 pl-4" style={{ borderColor: accentColor }}>
+                    <div className="flex justify-between items-start">
+                        <h3 className="font-semibold text-gray-800">{proj.name}</h3>
+                        {proj.type && (
+                            <span className="text-xs px-2 py-1 rounded-full text-white shrink-0 ml-2"
+                            style={{ backgroundColor: accentColor }}>
+                                {proj.type}
+                            </span>
+                        )}
+                    </div>
+                    {proj.description && (
+                        <p className="text-gray-600 text-sm mt-1">{proj.description}</p>
+                    )}
+                </div>
+            ))}
+        </div>
+    </section>
+)}
 
             {/* Education */}
             {data.education && data.education.length > 0 && (
@@ -126,7 +135,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                                     <h3 className="font-semibold text-gray-900">
                                         {edu.degree} {edu.field && `in ${edu.field}`}
                                     </h3>
-                                    <p className="text-gray-700">{edu.institution}</p>
+                                    <p className="text-gray-700">{edu.institute}</p>
                                     {edu.gpa && <p className="text-sm text-gray-600">GPA: {edu.gpa}</p>}
                                 </div>
                                 <div className="text-sm text-gray-600">

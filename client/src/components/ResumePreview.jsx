@@ -25,34 +25,43 @@ const ResumePreview = ({data, template, accentColor, classes= ""}) => {
         <div id='resume-preview' className={"border border-gray-200 print:shadow-none print:border-none" + classes}>
             {renderTemplate()}
         </div>
-        <style jsx>
-            {`
-            @page{
-                size: letter;
-                margin: 0;
-            }
-            @media print{
-                html, body{
-                    width: 8.5in;
-                    height: 11in;
-                    overflow: hidden;
-            }
-            body * {
-                visibility: visible;
-            }
-            #resume-preview {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                hieght: auto;
-                padding: 0;
-                box-shadow: none !important;
-                border: none !important;
-            }
-            }
-            `}
-        </style>
+        <style>
+    {`
+    @page {
+        size: letter;
+        margin: 0;
+    }
+    @media print {
+        html, body {
+            width: 8.5in;
+            height: 11in;
+            overflow: hidden;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+        }
+        body * {
+            visibility: visible;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+        }
+        #resume-preview {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: auto;
+            padding: 0;
+            box-shadow: none !important;
+            border: none !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+        }
+    }
+    `}
+</style>
     </div>
   )
 }

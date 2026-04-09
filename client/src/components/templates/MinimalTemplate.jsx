@@ -68,22 +68,26 @@ const MinimalTemplate = ({ data, accentColor }) => {
             )}
 
             {/* Projects */}
-            {data.project && data.project.length > 0 && (
-                <section className="mb-10">
-                    <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
-                        Projects
-                    </h2>
-
-                    <div className="space-y-4">
-                        {data.project.map((proj, index) => (
-                            <div key={index} className="flex flex-col gap-2 justify-between items-baseline">
-                                <h3 className="text-lg font-medium ">{proj.name}</h3>
-                                <p className="text-gray-600">{proj.description}</p>
-                            </div>
-                        ))}
+{data.projects && data.projects.length > 0 && (
+    <section className="mb-10">
+        <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
+            Projects
+        </h2>
+        <div className="space-y-4">
+            {data.projects.map((proj, index) => (
+                <div key={index} className="flex flex-col gap-1">
+                    <div className="flex justify-between items-baseline">
+                        <h3 className="text-lg font-medium">{proj.name}</h3>
+                        {proj.type && (
+                            <span className="text-sm text-gray-500">{proj.type}</span>
+                        )}
                     </div>
-                </section>
-            )}
+                    <p className="text-gray-600">{proj.description}</p>
+                </div>
+            ))}
+        </div>
+    </section>
+)}
 
             {/* Education */}
             {data.education && data.education.length > 0 && (
@@ -99,7 +103,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
                                     <h3 className="font-medium">
                                         {edu.degree} {edu.field && `in ${edu.field}`}
                                     </h3>
-                                    <p className="text-gray-600">{edu.institution}</p>
+                                    <p className="text-gray-600">{edu.institute}</p>
                                     {edu.gpa && <p className="text-sm text-gray-500">GPA: {edu.gpa}</p>}
                                 </div>
                                 <span className="text-sm text-gray-500">
