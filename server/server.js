@@ -14,15 +14,19 @@ await connectDB()
 
 app.use(express.json())
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: [
+        'http://localhost:5173',
+        'https://ai-resume-builder-frontend.onrender.com'  // replace with your actual Render frontend URL
+    ],
     credentials: true
 }))
+app.use(passport.initialize())
+
 
 app.get('/', (req,res)=> res.send("Server is live"))
 app.use('/api/users', userRoter)
 app.use('/api/resumes', resumeRouter)
 app.use('/api/ai', aiRouter)
-app.use(passport.initialize())
 
 
 app.listen(PORT, ()=>{
