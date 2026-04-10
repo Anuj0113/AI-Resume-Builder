@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from 'express';
 import cors from 'cors';
+import morgan from 'morgan';
 import connectDB from './configs/db.js';
 import userRoter from './routes/userRoutes.js';
 import resumeRouter from './routes/resumeRoutes.js';
@@ -22,6 +23,7 @@ app.use(cors({
     credentials: true
 }));
 
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(passport.initialize());
 
