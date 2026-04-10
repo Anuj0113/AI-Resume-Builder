@@ -7,6 +7,10 @@ export default defineConfig({
   resolve: {
     dedupe: ['react', 'react-dom', 'react-redux'],
   },
+  build: {
+    outDir: 'dist',
+    copyPublicDir: true  // ✅ ensures _redirects is copied to dist
+  },
   server: {
     port: 5173,
     proxy: {
