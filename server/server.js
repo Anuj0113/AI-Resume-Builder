@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import https from 'https';
 import connectDB from './configs/db.js';
 import userRoter from './routes/userRoutes.js';
 import resumeRouter from './routes/resumeRoutes.js';
@@ -34,4 +35,13 @@ app.use('/api/ai', aiRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+
+    // Keep server awake every 5 minutes
+    setInterval(() => {
+        https.get('https://ai-resume-builder-7xod.onrender.com/', (res) => {
+            console.log('Server pinged, status:', res.statusCode)
+        }).on('error', (err) => {
+            console.log('Ping error:', err.message)
+        })
+    }, 5 * 60 * 1000)
 });
