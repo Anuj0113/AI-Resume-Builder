@@ -28,17 +28,26 @@ const Login = () => {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        try {
-            const {data} = await api.post(`/api/users/${state}`, formData);
+    e.preventDefault()
+    try {
+        const {data} = await api.post(`/api/users/${state}`, formData);
+        
+        if (state === 'register') {
+            // Show success and redirect to login
+            toast.success(data.message)
+            setState('login')
+            setFormData({ name: '', email: '', password: '' })
+        } else {
+            // Login — save token and go to dashboard
             dispatch(login(data))
             localStorage.setItem('token', data.token)
             toast.success(data.message)
             navigate('/app')
-        } catch (error) {
-            toast.error(error?.response?.data?.message || error.message)
         }
+    } catch (error) {
+        toast.error(error?.response?.data?.message || error.message)
     }
+}
 
     useEffect(() => {
         if(user) {
